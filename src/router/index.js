@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/layout/Home.vue';
+import Login from '@/layout/Login.vue';
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [{
   name: 'Home',
   component: Home,
   chlidren: [],
+},
+{
+  path: '/login',
+  name: 'Login',
+  component: Login,
 },
 {
   path: '/about',
