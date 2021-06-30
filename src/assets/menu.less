@@ -1,45 +1,56 @@
 .home {
-    .menu-list {
-        position: fixed;
-        height: 100%;
-        width: 180px;
-        .ant-menu {
-            height: 100%;
-        }
+  .menu-list {
+    position: fixed;
+    height: 100%;
+    width: 180px;
+    .ant-menu {
+      height: 100%;
     }
-    .main-app {
-        margin-left: 180px;
-        transition: all .3s;
-        &.menu-unfold {
-            margin-left: 80px;
-        }
-        .main-header {
-            margin-left: 10px;
-            height: 50px;
-            line-height: 50px;
-            border-bottom: 1px solid #eee;
-            .breadcrums {
-                margin-left: 10px;
-                display: inline-block;
-            }
-            .user-info {
-                float: right;
-                margin-right: 20px;
-                text-align: center;
-                li:not(:first-child) {
-                    display: none;
-                    background-color: #eee;
-                    color: #999;
-                }
-                li {
-                    padding: 0 20px;
-                }
-                &:hover {
-                    li {
-                        display: block;
-                    }
-                }
-            }
-        }
+  }
+  .main-app {
+    margin-left: 180px;
+    transition: all 0.3s;
+    &.menu-unfold {
+      margin-left: 80px;
     }
+    .main-header {
+      margin-left: 10px;
+      height: 50px;
+      line-height: 50px;
+      border-bottom: 1px solid #eee;
+      .breadcrums {
+        margin-left: 10px;
+        display: inline-block;
+      }
+      .user-info {
+        width: 150px;
+        float: right;
+        top: 0;
+        right: 10px;
+        cursor: pointer;
+        text-align: center;
+        &::after {
+          clear: both;
+          content: "";
+          display: block;
+        }
+        li:not(:first-child) {
+          display: none;
+          &:hover {
+            display: block;
+            background-color: #eee;
+            color: #999;
+          }
+        }
+        li {
+          padding: 0 20px;
+        }
+        &:hover {
+          li {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 }
