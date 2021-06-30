@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '@/layout/Home.vue';
 import Login from '@/layout/Login.vue';
 import store from '@/store';
-import getMenuRoute from '../utils/permission';
+import getMenuRoute from '@/utils/permission';
 
 Vue.use(VueRouter);
 
@@ -12,6 +12,8 @@ const asyncRouterMap = [{
   name: 'Product',
   meta: {
     title: '商品',
+    hidden: false,
+    icon: 'bold',
   },
   component: Home,
   children: [{
@@ -19,6 +21,8 @@ const asyncRouterMap = [{
     name: 'ProductList',
     meta: {
       title: '商品列表',
+      hidden: false,
+      icon: 'unordered-list',
     },
     component: () => import('@/views/page/ProductList.vue'),
   },
@@ -27,6 +31,8 @@ const asyncRouterMap = [{
     name: 'ProductAdd',
     meta: {
       title: '新增商品',
+      hidden: false,
+      icon: 'file-add',
     },
     component: () => import('@/views/page/ProductAdd.vue'),
   },
@@ -35,6 +41,8 @@ const asyncRouterMap = [{
     name: 'Category',
     meta: {
       title: '商品类目',
+      hidden: false,
+      icon: 'project',
     },
     component: () => import('@/views/page/Category.vue'),
   },
@@ -47,12 +55,16 @@ const routes = [{
   component: Home,
   meta: {
     title: '首页',
+    hidden: false,
+    icon: 'home',
   },
   children: [{
-    path: 'index',
+    path: '/index',
     name: 'Index',
     meta: {
       title: '统计',
+      hidden: false,
+      icon: 'apartment',
     },
     component: () => import('@/views/page/Index.vue'),
   }],
@@ -62,6 +74,7 @@ const routes = [{
   name: 'Login',
   meta: {
     title: '登录',
+    hidden: true,
   },
   component: Login,
 },
@@ -73,14 +86,22 @@ const router = new VueRouter({
   routes,
 });
 
+let isAddRoutes = false;
 router.beforeEach((to, from, next) => {
-  let isAddRoutes = false;
   if (to.path !== '/login') {
-    if (store.state.user.username && store.state.user.email && store.state.user.role) {
+    if (store.state.user.username && store.state.user.appkey && store.state.user.role) {
       if (!isAddRoutes) {
         const menuRoutes = getMenuRoute(store.state.user.role, asyncRouterMap);
-        router.addRoutes(menuRoutes);
-        store.dispatch('changeMenuRoutes', routes.concat(menuRoutes));
+        // router.addRoute(menuRoutes);
+        // menuRoutes.forEach((item) => {
+        //   router.addRoute(item);
+        // });
+        store.dispatch('changeMenuRoutes', routes.concat(menuRoutes)).then(() => {
+          menuRoutes.forEach((item) => {
+            router.addRoute(item);
+          });
+          next();
+        });
         isAddRoutes = true;
       }
       return next();

@@ -7,12 +7,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     collapsed: false,
-    // user: {
-    //   userName: '',
-    //   email: '',
-    //   appKey: '',
-    //   role: '',
-    // },
     user: getUserCookie(),
     menuRoutes: [],
   },
