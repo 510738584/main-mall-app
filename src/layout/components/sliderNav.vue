@@ -9,8 +9,12 @@
     </a-button>
     <div class="breadcrums">
       <a-breadcrumb>
-        <a-breadcrumb-item>商品</a-breadcrumb-item>
-        <a-breadcrumb-item><a href="">商品统计</a></a-breadcrumb-item>
+        <a-breadcrumb-item>{{currentRoute[0].meta.title}}</a-breadcrumb-item>
+          <a-breadcrumb-item>
+            <router-link :to="{name: currentRoute[1].name}">
+              {{currentRoute[1].meta.title}}
+        </router-link>
+          </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <ul class="user-info">
@@ -22,6 +26,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      currentRoute: this.$router.currentRoute.matched,
+    };
+  },
+  mounted() {
+    console.log('$router', this.$router);
+    console.log('$route', this.$route);
+  },
+  watch: {
+    $route() {
+      this.currentRoute = this.$router.currentRoute.matched;
+      console.log(this.currentRoute);
+    },
+  },
   methods: {
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
